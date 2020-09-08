@@ -95,8 +95,8 @@ class Phonation:
     """
     def __init__(self):
         self.pitch_method="rapt"
-        self.size_frame=0.04
-        self.size_step=0.02
+        self.size_frame=0.02
+        self.size_step=0.01
         self.minf0=60
         self.maxf0=350
         self.voice_bias=-0.2
@@ -170,10 +170,10 @@ class Phonation:
         if self.pitch_method == 'praat':
             name_audio=audio.split('/')
             temp_uuid='phon'+name_audio[-1][0:-4]
-            if not os.path.exists(self.PATH+'/../tempfiles/'):
-                os.makedirs(self.PATH+'/../tempfiles/')
-            temp_filename_vuv=self.PATH+'/../tempfiles/tempVUV'+temp_uuid+'.txt'
-            temp_filename_f0=self.PATH+'/../tempfiles/tempF0'+temp_uuid+'.txt'
+            if not os.path.exists(self.PATH+'/tempfiles/'):
+                os.makedirs(self.PATH+'/tempfiles/')
+            temp_filename_vuv=self.PATH+'/tempfiles/tempVUV'+temp_uuid+'.txt'
+            temp_filename_f0=self.PATH+'/tempfiles/tempF0'+temp_uuid+'.txt'
             praat_functions.praat_vuv(audio, temp_filename_f0, temp_filename_vuv, time_stepF0=self.size_step, minf0=self.minf0, maxf0=self.maxf0)
             F0,_=praat_functions.decodeF0(temp_filename_f0,len(data_audio)/float(fs),self.size_step)
             os.remove(temp_filename_vuv)

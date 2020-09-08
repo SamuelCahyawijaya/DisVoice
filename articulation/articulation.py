@@ -108,8 +108,8 @@ class Articulation:
 
     def __init__(self):
         self.pitch_method="praat"
-        self.sizeframe=0.04
-        self.step=0.02
+        self.sizeframe=0.02
+        self.step=0.01
         self.nB=22
         self.nMFCC=12
         self.minf0=60
@@ -274,10 +274,10 @@ class Articulation:
         if self.pitch_method == 'praat':
             name_audio=audio.split('/')
             temp_uuid='articulation'+name_audio[-1][0:-4]
-            if not os.path.exists(self.PATH+'/../tempfiles/'):
-                os.makedirs(self.PATH+'/../tempfiles/')
-            temp_filename_vuv=self.PATH+'/../tempfiles/tempVUV'+temp_uuid+'.txt'
-            temp_filename_f0=self.PATH+'/../tempfiles/tempF0'+temp_uuid+'.txt'
+            if not os.path.exists(self.PATH+'/tempfiles/'):
+                os.makedirs(self.PATH+'/tempfiles/')
+            temp_filename_vuv=self.PATH+'/tempfiles/tempVUV'+temp_uuid+'.txt'
+            temp_filename_f0=self.PATH+'/tempfiles/tempF0'+temp_uuid+'.txt'
             praat_functions.praat_vuv(audio, temp_filename_f0, temp_filename_vuv, time_stepF0=self.step, minf0=self.minf0, maxf0=self.maxf0)
             F0,_=praat_functions.decodeF0(temp_filename_f0,len(data_audio)/float(fs),self.step)
             segmentsFull,segmentsOn,segmentsOff=praat_functions.read_textgrid_trans(temp_filename_vuv,data_audio,fs,self.sizeframe)
@@ -302,15 +302,21 @@ class Articulation:
 
         name_audio=audio.split('/')
         temp_uuid='artic'+name_audio[-1][0:-4]
-        if not os.path.exists(self.PATH+'/../tempfiles/'):
-            os.makedirs(self.PATH+'/../tempfiles/')
-        temp_filename=self.PATH+'/../tempfiles/tempFormants'+temp_uuid+'.txt'
+        if not os.path.exists(self.PATH+'/tempfiles/'):
+            os.makedirs(self.PATH+'/tempfiles/')
+        temp_filename=self.PATH+'/tempfiles/tempFormants'+temp_uuid+'.txt'
         praat_functions.praat_formants(audio, temp_filename,self.sizeframe,self.step)
         [F1, F2]=praat_functions.decodeFormants(temp_filename)
         os.remove(temp_filename)
 
         if len(F0)<len(F1):
             F0=np.hstack((F0, np.zeros(len(F1)-len(F0))))
+            F1nz=np.zeros((0,1))
+            F2nz=np.zeros((0,1))
+            DF1=np.zeros((0,1))
+            DDF1=np.zeros((0,1))
+            DF2=np.zeros((0,1))
+            DDF2=np.zeros((0,1))
         else:
             F1=np.hstack((F1, np.zeros(len(F0)-len(F1))))
             F2=np.hstack((F2, np.zeros(len(F0)-len(F2))))

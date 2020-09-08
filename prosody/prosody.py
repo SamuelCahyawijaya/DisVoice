@@ -314,10 +314,10 @@ class Prosody:
         if self.pitch_method == 'praat':
             name_audio=audio.split('/')
             temp_uuid='prosody'+name_audio[-1][0:-4]
-            if not os.path.exists(self.PATH+'/../tempfiles/'):
-                os.makedirs(self.PATH+'/../tempfiles/')
-            temp_filename_f0=self.PATH+'/../tempfiles/tempF0'+temp_uuid+'.txt'
-            temp_filename_vuv=self.PATH+'/../tempfiles/tempVUV'+temp_uuid+'.txt'
+            if not os.path.exists(self.PATH+'/tempfiles/'):
+                os.makedirs(self.PATH+'/tempfiles/')
+            temp_filename_f0=self.PATH+'/tempfiles/tempF0'+temp_uuid+'.txt'
+            temp_filename_vuv=self.PATH+'/tempfiles/tempVUV'+temp_uuid+'.txt'
             praat_functions.praat_vuv(audio, temp_filename_f0, temp_filename_vuv, time_stepF0=self.step, minf0=self.minf0, maxf0=self.maxf0)
 
             F0,_=praat_functions.decodeF0(temp_filename_f0,len(data_audio)/float(fs),self.step)
@@ -375,10 +375,10 @@ class Prosody:
         if self.pitch_method == 'praat':
             name_audio=audio.split('/')
             temp_uuid='prosody'+name_audio[-1][0:-4]
-            if not os.path.exists(self.PATH+'/../tempfiles/'):
-                os.makedirs(self.PATH+'/../tempfiles/')
-            temp_filename_f0=self.PATH+'/../tempfiles/tempF0'+temp_uuid+'.txt'
-            temp_filename_vuv=self.PATH+'/../tempfiles/tempVUV'+temp_uuid+'.txt'
+            if not os.path.exists(self.PATH+'/tempfiles/'):
+                os.makedirs(self.PATH+'/tempfiles/')
+            temp_filename_f0=self.PATH+'/tempfiles/tempF0'+temp_uuid+'.txt'
+            temp_filename_vuv=self.PATH+'/tempfiles/tempVUV'+temp_uuid+'.txt'
             praat_functions.praat_vuv(audio, temp_filename_f0, temp_filename_vuv, time_stepF0=self.step, minf0=self.minf0, maxf0=self.maxf0)
 
             F0,_=praat_functions.decodeF0(temp_filename_f0,len(data_audio)/float(fs),self.step)
